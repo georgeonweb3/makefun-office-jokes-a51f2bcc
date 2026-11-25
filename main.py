@@ -33,6 +33,9 @@ def main() -> None:
         os.makedirs(directory, exist_ok=True)
     with open(OUTPUT_PATH, "wb") as handle:
         handle.write(LINE.encode("utf-8"))
+    # Round-trip check: what landed on disk must be exactly the line,
+    # byte for byte, with no trailing newline added by the write.
+    assert open(OUTPUT_PATH, "rb").read() == LINE.encode("utf-8")
 
 
 if __name__ == "__main__":
